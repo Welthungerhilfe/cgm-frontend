@@ -1,6 +1,5 @@
 <template>
   <div>
-    <p>Home page</p>
     <p>A Day In The Life Of {{ qrCode }}</p>
     <p>at {{ age }} years old</p>
     <button @click="getRandom">New random child and age</button>
@@ -57,7 +56,8 @@ export default {
       // this.qrCode = measures
     },
     getRandomFromBackend() {
-      const path = `http://localhost:5000/v1/random`;
+      //const path = `http://localhost:5000/v1/random`;
+      const path = `https://cgm-grafana-cgm-backend-dev.azurewebsites.net/v1/random`;
       axios
         .get(path)
         .then(response => {
