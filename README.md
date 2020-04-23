@@ -11,6 +11,7 @@ runs against the cgm-backend qa environment
 
 ```sh
 cd frontend
+npm install
 npm run serve
 ```
 
