@@ -57,7 +57,7 @@ export default {
     },
     getRandomFromBackend() {
       //const path = `http://localhost:5000/v1/random`;
-      const path = `https://cgm-grafana-cgm-backend-dev.azurewebsites.net/v1/random`;
+      const path = `https://cgminbmz-dev.azurewebsites.net/v1/random`;
       axios
         .get(path)
         .then(response => {
