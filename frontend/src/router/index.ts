@@ -36,19 +36,4 @@ const router = new VueRouter({
   routes
 });
 
-// Global route guard
-router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.requiresAuthentication)) {
-    // this route requires auth, check if logged in
-    if (authentication.isAuthenticated()) {
-      // only proceed if authenticated.
-      next();
-    } else {
-      authentication.signIn();
-    }
-  } else {
-    next();
-  }
-});
-
 export default router;
