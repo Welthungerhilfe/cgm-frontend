@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <img alt="Image" src="../assets/default.jpg" />
+    <img src="../assets/default.jpg" class="img-fluid" alt="Responsive image">
     <ADayInTheLifeOf />
   </div>
 </template>
