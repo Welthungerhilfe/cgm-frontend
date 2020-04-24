@@ -3,12 +3,12 @@
     <div id="nav">
       <router-link to="/">Home</router-link> |
       <!-- This link has to be removed -->
-      <router-link to="/login">Login</router-link> |
+      <router-link to="/login">Login</router-link>|
       <!-- <a href="https://cgminbmz-dev.azurewebsites.net/login">Login</a> | -->
       <a href="https://cgminbmz-dev.azurewebsites.net/logout">Logout</a>
       <!--a href="http://localhost:5000/logout">Logout</a>
       <a href="http://localhost:5000/logout">Logout</a>
-      <TODO: get login state and correct link from an app function -->
+      <TODO: get login state and correct link from an app function-->
       <!--router-link to="/about">About</router-link-->
     </div>
     <router-view />
