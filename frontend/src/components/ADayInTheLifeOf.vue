@@ -6,7 +6,7 @@
           <img src="../assets/default.jpg" class="img-fluid" alt="Response" />
           <p>A Day In The Life Of {{ qrCode }}</p>
           <p>at {{ age }} years old</p>
-          <button @click="getRandom">New random child and age</button>
+          <button @click="getRandom" class="btn btn-primary margin-top">New random child and age</button>
         </div>
         <div class="col-md-4">
           <div class="table-responsive">
