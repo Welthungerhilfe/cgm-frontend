@@ -1,39 +1,69 @@
 <template>
   <div>
-    <p>A Day In The Life Of {{ qrCode }}</p>
-    <p>at {{ age }} years old</p>
-    <button @click="getRandom">New random child and age</button>
-    <div id="measures">
-      <table>
-        <tr>
-          <th>type</th>
-          <th>age</th>
-          <th>height</th>
-          <th>weight</th>
-          <th>muac</th>
-          <th>oedema</th>
-          <th>sync_timestamp</th>
-          <th>created_by</th>
-          <th>visible</th>
-          <th>deleted</th>
-          <th>deleted_by</th>
-          <th>id</th>
-        </tr>
-        <tr v-for="measure in measures" :key="measure.id">
-          <th>{{ measure.type }}</th>
-          <th>{{ measure.age }}</th>
-          <th>{{ measure.height }}</th>
-          <th>{{ measure.weight }}</th>
-          <th>{{ measure.muac }}</th>
-          <th>{{ measure.oedema }}</th>
-          <th>{{ measure.sync_timestamp }}</th>
-          <th>{{ measure.created_by }}</th>
-          <th>{{ measure.visible }}</th>
-          <th>{{ measure.deleted }}</th>
-          <th>{{ measure.deleted_by }}</th>
-          <th>{{ measure.id }}</th>
-        </tr>
-      </table>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-8">
+          <img src="../assets/default.jpg" class="img-fluid" alt="Response" />
+          <p>A Day In The Life Of {{ qrCode }}</p>
+          <p>at {{ age }} years old</p>
+          <button @click="getRandom">New random child and age</button>
+        </div>
+        <div class="col-md-4">
+          <div class="table-responsive">
+            <table class="table table-dark">
+              <thead>
+                <tr>
+                  <th>Attribute</th>
+                  <th v-for="measure in measures" :key="measure.id">ID {{ measure.id }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Type</td>
+                  <td v-for="measure in measures" :key="measure.id">{{ measure.type }}</td>
+                </tr>
+                <tr>
+                  <td>Age</td>
+                  <td v-for="measure in measures" :key="measure.id">{{ measure.age }}</td>
+                </tr>
+                <tr>
+                  <td>Height</td>
+                  <td v-for="measure in measures" :key="measure.id">{{ measure.height }}</td>
+                </tr>
+                <tr>
+                  <td>Width</td>
+                  <td v-for="measure in measures" :key="measure.id">{{ measure.weight }}</td>
+                </tr>
+                <tr>
+                  <td>Muac</td>
+                  <td v-for="measure in measures" :key="measure.id">{{ measure.muac }}</td>
+                </tr>
+                <tr>
+                  <td>Oedema</td>
+                  <td v-for="measure in measures" :key="measure.id">{{ measure.oedema }}</td>
+                </tr>
+                <tr>
+                  <td>Sync Timestamp</td>
+                  <td v-for="measure in measures" :key="measure.id">{{ measure.sync_timestamp }}</td>
+                </tr>
+                <tr>
+                  <td>Created By</td>
+                  <td v-for="measure in measures" :key="measure.id">{{ measure.created_by }}</td>
+                </tr>
+                <tr>
+                  <td>Deleted</td>
+                  <td v-for="measure in measures" :key="measure.id">{{ measure.deleted }}</td>
+                </tr>
+                <tr>
+                  <td>Deleted By</td>
+                  <td v-for="measure in measures" :key="measure.id">{{ measure.deleted_by }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="row"></div>
     </div>
   </div>
 </template>

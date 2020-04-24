@@ -1,18 +1,24 @@
 <template>
-  <div class="home">
-    <img src="../assets/default.jpg" class="img-fluid" alt="Responsive image">
-    <ADayInTheLifeOf />
+  <div class="container-fluid">
+    <login v-if="!loggedIn"></login>
+    <a-day-in-the-life-of-vue v-if="loggedIn"></a-day-in-the-life-of-vue>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import ADayInTheLifeOf from "@/components/ADayInTheLifeOf.vue";
+import Login from "../components/Login.vue";
+import ADayInTheLifeOfVue from "../components/ADayInTheLifeOf.vue";
 
 export default {
   name: "Home",
+  data: function() {
+    return {
+      loggedIn: true
+    };
+  },
   components: {
-    ADayInTheLifeOf
+    Login,
+    ADayInTheLifeOfVue
   }
 };
 </script>
