@@ -1,8 +1,9 @@
 import AuthenticationContext from 'adal-angular'
 
 const config: AuthenticationContext.Options = {
-    clientId: 'your aad application client id',
+    clientId: '28452a2f-fa24-4660-bd13-b75ad5df490c',
     redirectUri: 'http://cgminbmz-dev.azurewebsites.net/',
+    tenant: '006dabd7-456d-465b-a87f-f7d557e319c8',
     cacheLocation: 'localStorage'
 };
 
