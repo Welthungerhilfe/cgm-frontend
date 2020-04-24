@@ -2,6 +2,7 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Home</router-link> |
+      <!-- This link has to be removed -->
       <router-link to="/login">Login</router-link> |
       <!-- <a href="https://cgminbmz-dev.azurewebsites.net/login">Login</a> | -->
       <a href="https://cgminbmz-dev.azurewebsites.net/logout">Logout</a>
