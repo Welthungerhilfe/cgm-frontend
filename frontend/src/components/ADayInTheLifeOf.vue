@@ -2,13 +2,13 @@
   <div>
     <div class="container-fluid">
       <div class="row">
-        <div class="col-md-8">
-          <img src="../assets/default.jpg" class="img-fluid" alt="Response" />
+        <div class="col-md-6">
+          <img src="../assets/artifacts/test_rotated.jpg" class="img-fluid fit-img" alt="Response" />
           <p>A Day In The Life Of {{ qrCode }}</p>
           <p>at {{ age }} years old</p>
           <button @click="getRandom" class="btn btn-primary margin-top">New random child and age</button>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-6">
           <div class="table-responsive">
             <table class="table table-dark">
               <thead>
@@ -106,3 +106,9 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.fit-img {
+  max-height: 470px;
+}
+</style>
