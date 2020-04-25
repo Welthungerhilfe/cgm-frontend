@@ -1,39 +1,53 @@
 <template>
   <div>
-    <p>A Day In The Life Of {{ qrCode }}</p>
-    <p>at {{ age }} years old</p>
-    <button @click="getRandom">New random child and age</button>
-    <div id="measures">
-      <table>
-        <tr>
-          <th>type</th>
-          <th>age</th>
-          <th>height</th>
-          <th>weight</th>
-          <th>muac</th>
-          <th>oedema</th>
-          <th>sync_timestamp</th>
-          <th>created_by</th>
-          <th>visible</th>
-          <th>deleted</th>
-          <th>deleted_by</th>
-          <th>id</th>
-        </tr>
-        <tr v-for="measure in measures" :key="measure.id">
-          <th>{{ measure.type }}</th>
-          <th>{{ measure.age }}</th>
-          <th>{{ measure.height }}</th>
-          <th>{{ measure.weight }}</th>
-          <th>{{ measure.muac }}</th>
-          <th>{{ measure.oedema }}</th>
-          <th>{{ measure.sync_timestamp }}</th>
-          <th>{{ measure.created_by }}</th>
-          <th>{{ measure.visible }}</th>
-          <th>{{ measure.deleted }}</th>
-          <th>{{ measure.deleted_by }}</th>
-          <th>{{ measure.id }}</th>
-        </tr>
-      </table>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6">
+          <img src="../assets/artifacts/test_rotated.jpg" class="img-fluid fit-img" alt="Response" />
+          <p>A Day In The Life Of {{ qrCode }}</p>
+          <p>at {{ age }} years old</p>
+          <button @click="getRandom" class="btn btn-primary margin-top">New random child and age</button>
+        </div>
+        <div class="col-md-6">
+          <div class="table-responsive">
+            <table class="table table-dark">
+              <thead>
+                <tr>
+                  <th>Attribute</th>
+                  <th v-for="(measure, index) in measures" v-bind:key="index">ID</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr></tr>
+                <tr>
+                  <td>Age</td>
+                  <td v-for="measure in measures" :key="measure.id">{{ measure.age }}</td>
+                </tr>
+                <tr>
+                  <td>Height</td>
+                  <td v-for="measure in measures" :key="measure.id">{{ measure.height }}</td>
+                </tr>
+                <tr>
+                  <td>Weight</td>
+                  <td v-for="measure in measures" :key="measure.id">{{ measure.weight }}</td>
+                </tr>
+                <tr>
+                  <td>Muac</td>
+                  <td v-for="measure in measures" :key="measure.id">{{ measure.muac }}</td>
+                </tr>
+                <tr>
+                  <td>Sync Timestamp</td>
+                  <td v-for="measure in measures" :key="measure.id">{{ measure.createTimestamp }}</td>
+                </tr>
+                <tr>
+                  <td>Head Circumference</td>
+                  <td v-for="measure in measures" :key="measure.id">{{ measure.headCircumference }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -61,7 +75,24 @@ export default {
       axios
         .get(path)
         .then(response => {
-          this.measures = response.data;
+          this.measures = [
+            {
+              age: 1260,
+              createTimestamp: new Date(1585849905761).toLocaleString(),
+              height: 87.3,
+              weight: 10.2,
+              muac: 13.3,
+              headCircumference: 5.0
+            },
+            {
+              age: 1260,
+              createTimestamp: new Date(1585849905761).toLocaleString(),
+              height: 87.3,
+              weight: 10.2,
+              muac: 13.3,
+              headCircumference: 0.0
+            }
+          ];
           this.qrCode = response.data[0]["qr_code"];
           this.age = (response.data[0]["age"] / 365).toPrecision(2);
         })
@@ -75,3 +106,9 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.fit-img {
+  max-height: 470px;
+}
+</style>
