@@ -36,6 +36,7 @@ const router = new VueRouter({
   routes
 });
 
+// TODO: Route guard
 // Global route guard
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuthentication)) {
@@ -44,7 +45,7 @@ router.beforeEach((to, from, next) => {
       // only proceed if authenticated.
       next();
     } else {
-      authentication.signIn();
+      next();
     }
   } else {
     next();
