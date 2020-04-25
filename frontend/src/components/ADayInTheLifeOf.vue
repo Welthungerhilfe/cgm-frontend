@@ -2,26 +2,23 @@
   <div>
     <div class="container-fluid">
       <div class="row">
-        <div class="col-md-8">
-          <img src="../assets/default.jpg" class="img-fluid" alt="Response" />
+        <div class="col-md-6">
+          <img src="../assets/artifacts/test_rotated.jpg" class="img-fluid fit-img" alt="Response" />
           <p>A Day In The Life Of {{ qrCode }}</p>
           <p>at {{ age }} years old</p>
           <button @click="getRandom" class="btn btn-primary margin-top">New random child and age</button>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-6">
           <div class="table-responsive">
             <table class="table table-dark">
               <thead>
                 <tr>
                   <th>Attribute</th>
-                  <th v-for="measure in measures" :key="measure.id">ID {{ measure.id }}</th>
+                  <th v-for="(measure, index) in measures" v-bind:key="index">ID</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>Type</td>
-                  <td v-for="measure in measures" :key="measure.id">{{ measure.type }}</td>
-                </tr>
+                <tr></tr>
                 <tr>
                   <td>Age</td>
                   <td v-for="measure in measures" :key="measure.id">{{ measure.age }}</td>
@@ -31,7 +28,7 @@
                   <td v-for="measure in measures" :key="measure.id">{{ measure.height }}</td>
                 </tr>
                 <tr>
-                  <td>Width</td>
+                  <td>Weight</td>
                   <td v-for="measure in measures" :key="measure.id">{{ measure.weight }}</td>
                 </tr>
                 <tr>
@@ -39,31 +36,18 @@
                   <td v-for="measure in measures" :key="measure.id">{{ measure.muac }}</td>
                 </tr>
                 <tr>
-                  <td>Oedema</td>
-                  <td v-for="measure in measures" :key="measure.id">{{ measure.oedema }}</td>
-                </tr>
-                <tr>
                   <td>Sync Timestamp</td>
-                  <td v-for="measure in measures" :key="measure.id">{{ measure.sync_timestamp }}</td>
+                  <td v-for="measure in measures" :key="measure.id">{{ measure.createTimestamp }}</td>
                 </tr>
                 <tr>
-                  <td>Created By</td>
-                  <td v-for="measure in measures" :key="measure.id">{{ measure.created_by }}</td>
-                </tr>
-                <tr>
-                  <td>Deleted</td>
-                  <td v-for="measure in measures" :key="measure.id">{{ measure.deleted }}</td>
-                </tr>
-                <tr>
-                  <td>Deleted By</td>
-                  <td v-for="measure in measures" :key="measure.id">{{ measure.deleted_by }}</td>
+                  <td>Head Circumference</td>
+                  <td v-for="measure in measures" :key="measure.id">{{ measure.headCircumference }}</td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
       </div>
-      <div class="row"></div>
     </div>
   </div>
 </template>
@@ -91,7 +75,24 @@ export default {
       axios
         .get(path)
         .then(response => {
-          this.measures = response.data;
+          this.measures = [
+            {
+              age: 1260,
+              createTimestamp: new Date(1585849905761).toLocaleString(),
+              height: 87.3,
+              weight: 10.2,
+              muac: 13.3,
+              headCircumference: 5.0
+            },
+            {
+              age: 1260,
+              createTimestamp: new Date(1585849905761).toLocaleString(),
+              height: 87.3,
+              weight: 10.2,
+              muac: 13.3,
+              headCircumference: 0.0
+            }
+          ];
           this.qrCode = response.data[0]["qr_code"];
           this.age = (response.data[0]["age"] / 365).toPrecision(2);
         })
@@ -105,3 +106,9 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.fit-img {
+  max-height: 470px;
+}
+</style>

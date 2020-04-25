@@ -10,6 +10,11 @@ import ADayInTheLifeOfVue from "../components/ADayInTheLifeOf.vue";
 
 export default {
   name: "Home",
+  data: function() {
+    return {
+      loggedIn: true
+    };
+  },
   components: {
     ADayInTheLifeOfVue
   }
