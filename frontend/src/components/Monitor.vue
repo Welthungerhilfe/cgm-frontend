@@ -58,34 +58,48 @@
               <thead>
                 <tr>
                   <th>Attribute</th>
-                  <th v-for="(measure, index) in measures" v-bind:key="index">ID</th>
+                  <th v-for="(measure, index) in measures" v-bind:key="index">
+                    ID
+                  </th>
                 </tr>
               </thead>
               <tbody>
                 <tr></tr>
                 <tr>
                   <td>Age</td>
-                  <td v-for="measure in measures" :key="measure.id">{{ measure.age }}</td>
+                  <td v-for="measure in measures" :key="measure.id">
+                    {{ measure.age }}
+                  </td>
                 </tr>
                 <tr>
                   <td>Height</td>
-                  <td v-for="measure in measures" :key="measure.id">{{ measure.height }}</td>
+                  <td v-for="measure in measures" :key="measure.id">
+                    {{ measure.height }}
+                  </td>
                 </tr>
                 <tr>
                   <td>Weight</td>
-                  <td v-for="measure in measures" :key="measure.id">{{ measure.weight }}</td>
+                  <td v-for="measure in measures" :key="measure.id">
+                    {{ measure.weight }}
+                  </td>
                 </tr>
                 <tr>
                   <td>Muac</td>
-                  <td v-for="measure in measures" :key="measure.id">{{ measure.muac }}</td>
+                  <td v-for="measure in measures" :key="measure.id">
+                    {{ measure.muac }}
+                  </td>
                 </tr>
                 <tr>
                   <td>Sync Timestamp</td>
-                  <td v-for="measure in measures" :key="measure.id">{{ measure.createTimestamp }}</td>
+                  <td v-for="measure in measures" :key="measure.id">
+                    {{ measure.createTimestamp }}
+                  </td>
                 </tr>
                 <tr>
                   <td>Head Circumference</td>
-                  <td v-for="measure in measures" :key="measure.id">{{ measure.headCircumference }}</td>
+                  <td v-for="measure in measures" :key="measure.id">
+                    {{ measure.headCircumference }}
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -98,7 +112,8 @@
 
 <script>
 import axios from "axios";
-import Vue from "vue";
+//import Vue from "vue";
+import { globalConf } from "../main";
 
 export default {
   data() {
@@ -110,7 +125,9 @@ export default {
   },
   methods: {
     getRandomFromBackend() {
-      const path = `https://cgminbmz-dev.azurewebsites.net/v1/random`;
+      //const path = `https://cgminbmz-dev.azurewebsites.net/v1/random`;
+      //const path = `http://localhost:5000/v1/random`;
+      const path = globalConf.backendUrl + `/v1/random`;
       axios
         .get(path, { withCredentials: true })
         .then(response => {
