@@ -1,16 +1,60 @@
 <template>
   <div>
-    <div class="container-fluid">
+    <div class="content container-fluid">
       <div class="row">
         <div class="col-md-6">
-          <img src="../assets/artifacts/test_rotated.jpg" class="img-fluid fit-img" alt="Response" />
+          <b-carousel
+            id="carousel-1"
+            v-model="slide"
+            :interval="4000"
+            controls
+            indicators
+            background="#6C757D"
+            img-width="1024"
+            img-height="480"
+            style="text-shadow: 1px 1px 2px #333;"
+            class="fit-images"
+            @sliding-start="onSlideStart"
+            @sliding-end="onSlideEnd"
+          >
+            <b-carousel-slide>
+              <template v-slot:img>
+                <img
+                  class="d-block img-fluid w-100"
+                  src="../assets/artifacts/test_rotated.jpg"
+                  alt="image slot"
+                />
+              </template>
+            </b-carousel-slide>
+            <b-carousel-slide>
+              <template v-slot:img>
+                <img
+                  class="d-block img-fluid w-100"
+                  src="../assets/artifacts/test_rotated.jpg"
+                  alt="image slot"
+                />
+              </template>
+            </b-carousel-slide>
+            <b-carousel-slide>
+              <template v-slot:img>
+                <img
+                  class="d-block img-fluid w-100"
+                  src="../assets/artifacts/test_rotated.jpg"
+                  alt="image slot"
+                />
+              </template>
+            </b-carousel-slide>
+          </b-carousel>
           <p>A Day In The Life Of {{ qrCode }}</p>
           <p>at {{ age }} years old</p>
-          <button @click="getRandomFromBackend" class="btn btn-primary margin-top">New random child and age</button>
+          <button
+            @click="getRandomFromBackend"
+            class="btn btn-primary margin-top"
+          >New random child and age</button>
         </div>
         <div class="col-md-6">
           <div class="table-responsive">
-            <table class="table table-dark">
+            <table class="table table-bordered bg-secondary">
               <thead>
                 <tr>
                   <th>Attribute</th>
@@ -68,7 +112,7 @@ export default {
     getRandomFromBackend() {
       const path = `https://cgminbmz-dev.azurewebsites.net/v1/random`;
       axios
-        .get(path, {withCredentials: true})
+        .get(path, { withCredentials: true })
         .then(response => {
           console.log(response);
           // this.measures = [
@@ -104,7 +148,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.fit-img {
-  max-height: 470px;
+.fit-images {
+  img {
+    max-height: 470px;
+    object-fit: contain;
+  }
 }
 </style>

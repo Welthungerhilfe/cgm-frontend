@@ -1,9 +1,19 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <button v-on:click="logout()">Logout</button>
-      <!--router-link to="/about">About</router-link-->
-    </div>
+    <nav class="navbar navbar-dark bg-dark">
+      <a class="navbar-brand" href="/">
+        <img
+          src="../src/assets/default.jpg"
+          width="30"
+          height="30"
+          class="d-inline-block align-top"
+          alt
+        />
+        Child Growth Monitor
+      </a>
+      <button class="btn btn-danger my-2 my-lg-0" v-on:click="logout()">Logout</button>
+    </nav>
+    <!-- <router-link to="/about">About</router-link> -->
     <router-view />
   </div>
 </template>
@@ -31,6 +41,10 @@ export default Vue.extend({
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+
+  .content {
+    padding: 16px;
+  }
 }
 
 #nav {
