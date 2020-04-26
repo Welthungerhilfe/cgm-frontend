@@ -2,7 +2,7 @@ import Vue from "vue";
 import App from "./App.vue";
 import "./registerServiceWorker";
 import router from "./router";
-import { BootstrapVue } from 'bootstrap-vue'
+import { BootstrapVue, BIconViewList } from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import authPlugin from "../src/plugins/authPlugin"
@@ -13,8 +13,13 @@ Vue.config.productionTip = false;
 Vue.use(BootstrapVue)
 Vue.use(authPlugin)
 
-// axios.interceptors.request.use((request): any => {
-// });
+axios.interceptors.request.use((request): any => {
+  if (sessionStorage.loggedIn) {
+    request.headers['Authorization'] = `Bearer ${this.getToken()}`;
+  } else {
+    return request;
+  }
+});
 
 // Init adal authentication - then create Vue app.
 new Vue({

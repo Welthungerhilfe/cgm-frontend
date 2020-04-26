@@ -1,5 +1,4 @@
 import * as Msal from "msal";
-import { BIconViewList } from 'bootstrap-vue';
 
 const msalConfig = {
     auth: {
@@ -14,11 +13,6 @@ const msalConfig = {
     }
 };
 
-const apiConfig = {
-    b2cScopes: ["https://fabrikamb2c.onmicrosoft.com/helloapi/demo.read"],
-    webApi: "https://fabrikamb2chello.azurewebsites.net/hello"
-};
-
 /** 
  * Scopes you enter here will be consented once you authenticate. For a full list of available authentication parameters, 
  * visit https://azuread.github.io/microsoft-authentication-library-for-js/docs/msal/modules/_authenticationparameters_.html
@@ -29,21 +23,26 @@ const loginRequest = {
 
 // Add here scopes for access token to be used at the API endpoints.
 const tokenRequest = {
-    scopes: apiConfig.b2cScopes,  // e.g. ["https://fabrikamb2c.onmicrosoft.com/helloapi/demo.read"]
+    scopes: ["https://cgminbmz-dev.azurewebsites.net/.default"],  // e.g. ["https://fabrikamb2c.onmicrosoft.com/helloapi/demo.read"]
 };
 
 const authPlugin = {
     // The install method is all that needs to exist on the plugin object.
     // It takes the global Vue object as well as user-defined options.
     install(Vue: any, options: any) {
+        const msalInstance = new Msal.UserAgentApplication(msalConfig);
+
         function authRedirectCallBack(error: any, response: any) {
             if (error) {
                 console.log(error);
             } else {
                 sessionStorage.loggedIn = true;
+                sessionStorage.accessToken = response.accessToken;
+
+                // only id_token are received at the moment.
                 if (response.tokenType === "id_token") {
+                    sessionStorage.idToken = response.idToken;
                     console.log("id_token acquired at: " + new Date().toString());
-                    //getTokenRedirect(tokenRequest);
                 } else if (response.tokenType === "access_token") {
                     console.log("access_token acquired at: " + new Date().toString());
                 } else {
@@ -52,45 +51,46 @@ const authPlugin = {
             }
         }
 
-        const msalInstance = new Msal.UserAgentApplication(msalConfig);
         msalInstance.handleRedirectCallback(authRedirectCallBack);
-        // We call Vue.mixin() here to inject functionality into all components.
+        // Call Vue.mixin() here to inject functionality into all components.
         Vue.mixin({
-            created() {
-                Vue.loginIfNeccessary()
+            methods: {
+                loginIfNeccessary: function () {
+                    if (this.checkIfLoggedIn() === 'false' && !msalInstance.getLoginInProgress()) {
+                        this.login();
+                    }
+                },
+    
+                login: function (): void {
+                    msalInstance.loginRedirect(loginRequest);
+                },
+    
+                logout: function (): void {
+                    msalInstance.logout();
+                    sessionStorage.loggedIn = false;
+                },
+    
+                checkIfLoggedIn: function () {
+                    return sessionStorage.loggedIn;
+                },
+    
+                getMsalInstance: function () {
+                    return msalInstance;
+                },
+        
+                getToken: function () {
+                    console.log('Aquire Token...');
+                    msalInstance.acquireTokenSilent(tokenRequest).then(accessToken => {
+                        console.log(accessToken);
+                        return accessToken;
+                    }, error => {
+                        console.log(error);
+                        return error;
+                    }
+                    );
+                }
             }
         });
-
-        Vue.loginIfNeccessary = function () {
-            console.log('hiii V', msalInstance.getLoginInProgress());
-            if (Vue.checkIfLoggedIn() === 'false' && !msalInstance.getLoginInProgress()) {
-                Vue.login();
-            }
-        };
-
-        Vue.login = function (): void {
-            msalInstance.loginRedirect(loginRequest);
-        };
-
-        Vue.logout = function (): void {
-            msalInstance.logout();
-            sessionStorage.loggedIn = false;
-        };
-
-        Vue.checkIfLoggedIn = function () {
-            return sessionStorage.loggedIn;
-        };
-
-        Vue.getToken = function () {
-            return msalInstance.acquireTokenSilent(tokenRequest).then(
-                accessToken => {
-                    return accessToken;
-                },
-                error => {
-                    return null;
-                }
-            );
-        };
     }
 };
 

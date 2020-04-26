@@ -1,12 +1,11 @@
 <template>
   <div class="container-fluid">
-    <a-day-in-the-life-of-vue></a-day-in-the-life-of-vue>
+    <monitor></monitor>
   </div>
 </template>
 
 <script>
-import Login from "../components/Login.vue";
-import ADayInTheLifeOfVue from "../components/ADayInTheLifeOf.vue";
+import Monitor from "../components/Monitor.vue";
 
 export default {
   name: "Home",
@@ -16,7 +15,7 @@ export default {
     };
   },
   components: {
-    ADayInTheLifeOfVue
+    Monitor
   }
 };
 </script>

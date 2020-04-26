@@ -54,6 +54,8 @@
 
 <script>
 import axios from "axios";
+import Vue from "vue";
+
 export default {
   data() {
     return {
@@ -70,7 +72,6 @@ export default {
       // this.qrCode = measures
     },
     getRandomFromBackend() {
-      //const path = `http://localhost:5000/v1/random`;
       const path = `https://cgminbmz-dev.azurewebsites.net/v1/random`;
       axios
         .get(path)
@@ -102,7 +103,7 @@ export default {
     }
   },
   created() {
-    this.getRandom();
+    // this.getRandom();
   }
 };
 </script>

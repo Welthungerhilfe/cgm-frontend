@@ -2,7 +2,6 @@ import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
 import Home from "../views/Home.vue";
 import Login from "../components/Login.vue";
-import authentication from "../authentication"
 
 Vue.use(VueRouter);
 
@@ -14,11 +13,6 @@ const routes: Array<RouteConfig> = [
     meta: {
       requiresAuthentication: true
     }
-  },
-  {
-    path: "/login",
-    name: "Login",
-    component: Login
   },
   {
     path: "/about",
@@ -38,18 +32,18 @@ const router = new VueRouter({
 
 // TODO: Route guard
 // Global route guard
-router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.requiresAuthentication)) {
-    // this route requires auth, check if logged in
-    if (authentication.isAuthenticated()) {
-      // only proceed if authenticated.
-      next();
-    } else {
-      next();
-    }
-  } else {
-    next();
-  }
-});
+// router.beforeEach((to, from, next) => {
+//   if (to.matched.some(record => record.meta.requiresAuthentication)) {
+//     // this route requires auth, check if logged in
+//     if (Vue.getLoggedIn()) {
+//       // only proceed if authenticated.
+//       next();
+//     } else {
+//       next();
+//     }
+//   } else {
+//     next();
+//   }
+// });
 
 export default router;
