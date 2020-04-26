@@ -11,7 +11,13 @@
           <b-input-group prepend="Password" class="mt-3">
             <b-form-input v-model="loginForm.password"></b-form-input>
           </b-input-group>
-          <button type="submit" v-on:click="login()" class="btn btn-primary margin-top">Submit</button>
+          <button
+            type="submit"
+            v-on:click="login()"
+            class="btn btn-primary margin-top"
+          >
+            Submit
+          </button>
         </form>
       </div>
       <div class="col-md-3"></div>
