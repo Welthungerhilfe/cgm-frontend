@@ -6,7 +6,7 @@
           <img src="../assets/artifacts/test_rotated.jpg" class="img-fluid fit-img" alt="Response" />
           <p>A Day In The Life Of {{ qrCode }}</p>
           <p>at {{ age }} years old</p>
-          <button @click="getRandom" class="btn btn-primary margin-top">New random child and age</button>
+          <button @click="getRandomFromBackend" class="btn btn-primary margin-top">New random child and age</button>
         </div>
         <div class="col-md-6">
           <div class="table-responsive">
@@ -65,35 +65,30 @@ export default {
     };
   },
   methods: {
-    getRandom() {
-      // this.randomMeasure = this.getRandomInt(1, 100)
-      this.measures = this.getRandomFromBackend();
-
-      // this.qrCode = measures
-    },
     getRandomFromBackend() {
       const path = `https://cgminbmz-dev.azurewebsites.net/v1/random`;
       axios
-        .get(path)
+        .get(path, {withCredentials: true})
         .then(response => {
-          this.measures = [
-            {
-              age: 1260,
-              createTimestamp: new Date(1585849905761).toLocaleString(),
-              height: 87.3,
-              weight: 10.2,
-              muac: 13.3,
-              headCircumference: 5.0
-            },
-            {
-              age: 1260,
-              createTimestamp: new Date(1585849905761).toLocaleString(),
-              height: 87.3,
-              weight: 10.2,
-              muac: 13.3,
-              headCircumference: 0.0
-            }
-          ];
+          console.log(response);
+          // this.measures = [
+          //   {
+          //     age: 1260,
+          //     createTimestamp: new Date(1585849905761).toLocaleString(),
+          //     height: 87.3,
+          //     weight: 10.2,
+          //     muac: 13.3,
+          //     headCircumference: 5.0
+          //   },
+          //   {
+          //     age: 1260,
+          //     createTimestamp: new Date(1585849905761).toLocaleString(),
+          //     height: 87.3,
+          //     weight: 10.2,
+          //     muac: 13.3,
+          //     headCircumference: 0.0
+          //   }
+          // ];
           this.qrCode = response.data[0]["qr_code"];
           this.age = (response.data[0]["age"] / 365).toPrecision(2);
         })

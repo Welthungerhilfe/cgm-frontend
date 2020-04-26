@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div id="nav">
-      <button v-on:click="userLogout()">Logout</button>
+      <button v-on:click="logout()">Logout</button>
       <!--router-link to="/about">About</router-link-->
     </div>
     <router-view />
@@ -14,11 +14,11 @@ import authPlugin from "../src/plugins/authPlugin";
 
 export default Vue.extend({
   created() {
-    this.loginIfNeccessary();
+    Vue.prototype.auth.loginIfNeccessary();
   },
   methods: {
-    userLogout: function() {
-      this.logout();
+    logout: function() {
+      Vue.prototype.auth.logout();
     }
   }
 });

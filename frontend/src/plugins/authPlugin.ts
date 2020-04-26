@@ -52,45 +52,43 @@ const authPlugin = {
         }
 
         msalInstance.handleRedirectCallback(authRedirectCallBack);
-        // Call Vue.mixin() here to inject functionality into all components.
-        Vue.mixin({
-            methods: {
-                loginIfNeccessary: function () {
-                    if (this.checkIfLoggedIn() === 'false' && !msalInstance.getLoginInProgress()) {
-                        this.login();
-                    }
-                },
-    
-                login: function (): void {
-                    msalInstance.loginRedirect(loginRequest);
-                },
-    
-                logout: function (): void {
-                    msalInstance.logout();
-                    sessionStorage.loggedIn = false;
-                },
-    
-                checkIfLoggedIn: function () {
-                    return sessionStorage.loggedIn;
-                },
-    
-                getMsalInstance: function () {
-                    return msalInstance;
-                },
-        
-                getToken: function () {
-                    console.log('Aquire Token...');
-                    msalInstance.acquireTokenSilent(tokenRequest).then(accessToken => {
-                        console.log(accessToken);
-                        return accessToken;
-                    }, error => {
-                        console.log(error);
-                        return error;
-                    }
-                    );
+
+        Vue.prototype.auth = {
+            loginIfNeccessary: function () {
+                if (this.checkIfLoggedIn() === 'false' && !msalInstance.getLoginInProgress()) {
+                    this.login();
                 }
+            },
+
+            login: function (): void {
+                msalInstance.loginRedirect(loginRequest);
+            },
+
+            logout: function (): void {
+                msalInstance.logout();
+                sessionStorage.loggedIn = false;
+            },
+
+            checkIfLoggedIn: function () {
+                return sessionStorage.loggedIn;
+            },
+
+            getMsalInstance: function () {
+                return msalInstance;
+            },
+
+            getToken: function () {
+                console.log('Aquire Token...');
+                msalInstance.acquireTokenSilent(tokenRequest).then(accessToken => {
+                    console.log(accessToken);
+                    return accessToken;
+                }, error => {
+                    console.log(error);
+                    return error;
+                }
+                );
             }
-        });
+        }
     }
 };
 
