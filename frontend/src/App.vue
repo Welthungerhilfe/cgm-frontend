@@ -45,6 +45,10 @@ export default Vue.extend({
   .content {
     padding: 16px;
   }
+
+  .margin-top {
+    margin-top: 1rem;
+  }
 }
 
 #nav {
