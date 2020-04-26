@@ -11,7 +11,9 @@
         />
         Child Growth Monitor
       </a>
-      <button class="btn btn-danger my-2 my-lg-0" v-on:click="logout()">Logout</button>
+      <button class="btn btn-danger my-2 my-lg-0" v-on:click="logout()">
+        Logout
+      </button>
     </nav>
     <!-- <router-link to="/about">About</router-link> -->
     <router-view />
