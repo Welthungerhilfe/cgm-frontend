@@ -1,15 +1,33 @@
 <template>
   <div>
-    <div class="container-fluid">
+    <div class="content container-fluid">
       <div class="row">
         <div class="col-md-6">
-          <img
-            src="../assets/artifacts/test_rotated.jpg"
-            class="img-fluid fit-img"
-            alt="Response"
-          />
-          <p>A Day In The Life Of {{ qrCode }}</p>
-          <p>at {{ age }} years old</p>
+          <b-carousel
+            id="carousel-1"
+            :interval="4000"
+            controls
+            indicators
+            background="#DADADA"
+            img-width="1024"
+            img-height="480"
+            style="text-shadow: 1px 1px 2px #333;"
+            class="fit-images"
+            v-if="imageData.length"
+          >
+            <b-carousel-slide v-for="imgData in imageData" :key="imgData.src">
+              <template v-slot:img>
+                <img
+                  class="d-block img-fluid w-100"
+                  :src="
+                    'https://cgminbmzdev.z29.web.core.windows.net/' +
+                      imgData.src
+                  "
+                  alt="image"
+                />
+              </template>
+            </b-carousel-slide>
+          </b-carousel>
           <button
             @click="getRandomFromBackend"
             class="btn btn-primary margin-top"
@@ -18,8 +36,8 @@
           </button>
         </div>
         <div class="col-md-6">
-          <div class="table-responsive">
-            <table class="table table-dark">
+          <div class="table-responsive" v-if="measures.length">
+            <table class="table thead-dark table-bordered">
               <thead>
                 <tr>
                   <th>Attribute</th>
@@ -43,9 +61,9 @@
                   </td>
                 </tr>
                 <tr>
-                  <td>Weight</td>
+                  <td>Muac</td>
                   <td v-for="measure in measures" :key="measure.id">
-                    {{ measure.weight }}
+                    {{ measure.muac }}
                   </td>
                 </tr>
                 <tr>
@@ -57,13 +75,25 @@
                 <tr>
                   <td>Sync Timestamp</td>
                   <td v-for="measure in measures" :key="measure.id">
-                    {{ measure.createTimestamp }}
+                    {{ measure.sync_timestamp }}
                   </td>
                 </tr>
                 <tr>
-                  <td>Head Circumference</td>
+                  <td>Oedema</td>
                   <td v-for="measure in measures" :key="measure.id">
-                    {{ measure.headCircumference }}
+                    {{ measure.oedema }}
+                  </td>
+                </tr>
+                <tr>
+                  <td>Created By</td>
+                  <td v-for="measure in measures" :key="measure.id">
+                    {{ measure.created_by }}
+                  </td>
+                </tr>
+                <tr>
+                  <td>QR Code</td>
+                  <td v-for="measure in measures" :key="measure.id">
+                    {{ measure.qr_code }}
                   </td>
                 </tr>
               </tbody>
@@ -85,38 +115,26 @@ export default {
     return {
       qrCode: "...",
       age: 0.0,
-      measures: [{}]
+      measures: [],
+      imageData: [],
+      globalConf: globalConf
     };
   },
   methods: {
     getRandomFromBackend() {
-      //const path = `https://cgminbmz-dev.azurewebsites.net/v1/random`;
-      //const path = `http://localhost:5000/v1/random`;
-      const path = globalConf.backendUrl + `/v1/random`;
+      const dataPath = globalConf.backendUrl + `/v1/random`;
+
       axios
-        .get(path, { withCredentials: true })
+        .get(dataPath, { withCredentials: true })
         .then(response => {
-          console.log(response);
-          // this.measures = [
-          //   {
-          //     age: 1260,
-          //     createTimestamp: new Date(1585849905761).toLocaleString(),
-          //     height: 87.3,
-          //     weight: 10.2,
-          //     muac: 13.3,
-          //     headCircumference: 5.0
-          //   },
-          //   {
-          //     age: 1260,
-          //     createTimestamp: new Date(1585849905761).toLocaleString(),
-          //     height: 87.3,
-          //     weight: 10.2,
-          //     muac: 13.3,
-          //     headCircumference: 0.0
-          //   }
-          // ];
-          this.qrCode = response.data[0]["qr_code"];
-          this.age = (response.data[0]["age"] / 365).toPrecision(2);
+          this.measures = response.data;
+          const qrCode = this.measures[0].qr_code;
+          const age = this.measures[0].age;
+          const imagesUrl =
+            globalConf.backendUrl + `/v1/qrcodes/${qrCode}/ages/${age}/images`;
+          axios.get(imagesUrl, { withCredentials: true }).then(response => {
+            this.imageData = response.data;
+          });
         })
         .catch(error => {
           console.log(error);
@@ -124,13 +142,16 @@ export default {
     }
   },
   created() {
-    // this.getRandom();
+    this.getRandomFromBackend();
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.fit-img {
-  max-height: 470px;
+.fit-images {
+  img {
+    max-height: 470px;
+    object-fit: contain;
+  }
 }
 </style>
