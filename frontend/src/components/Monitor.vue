@@ -122,10 +122,6 @@ export default {
   },
   methods: {
     getRandomFromBackend() {
-      //const path = `https://cgminbmz-dev.azurewebsites.net/v1/random`;
-      //const path = `http://localhost:5000/v1/random`;
-      const imageDataPath =
-        globalConf.backendUrl + `/v1/qrcodes/Preprod2/ages/1475/images`;
       const dataPath = globalConf.backendUrl + `/v1/random`;
 
       axios
@@ -143,19 +139,6 @@ export default {
         .catch(error => {
           console.log(error);
         });
-
-      // Promise.all([
-      //   axios.get(imageDataPath, { withCredentials: true }),
-      //   axios.get(dataPath, { withCredentials: true })
-      // ])
-      //   .then(responses => {
-      //     this.imageData = responses[0].data;
-      //     this.measures = responses[1].data;
-      //     console.log(this.imageData);
-      //   })
-      //   .catch(error => {
-      //     console.log(error);
-      //   });
     }
   },
   created() {
